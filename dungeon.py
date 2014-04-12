@@ -26,33 +26,31 @@ class Player:
         self.pole = True
    
     def has_item(self, item):
-        return gettattr(self, item)
+        return getattr(self, item)
 
     def pole_down(self):
         return self.pole
 
-    def current_spot():
+    def current_spot(self):
         return self.spot
 
-    def curren_hp():
+    def current_hp(self):
         return self.hp
 
 class Game:
 
     def __init__(self):    
         print 'A new Doomed Soul enters the Deadly Danger Dungeon'
-   
-    def player(self):
         self.player = Player()
 
-    def check_spot(self, spot):
-        if self.player.current_spot in dungeon:
+    def check_spot(self):
+        if self.player.current_spot() in dungeon:
             event_happens = dungeon[spot] - 1000
             print event_text[event_happens]
     
     def determine_direction(self):
         # Determine which direction to go based on game conditions
-        if self.player.has_item('key') == True and self.player.current_spot > 1 or self.player.current_spot > 89 and self.player.pole_down == True:
+        if self.player.has_item('key') == True and self.player.current_spot() > 1 or self.player.current_spot() > 89 and self.player.pole_down() == True:
             # Special case, going backwards
             self.direction = 0
        
@@ -75,7 +73,7 @@ class Game:
         if self.player.current_hp() > 0:
             return True
 
-    def take_turn():
+    def take_turn(self):
         self.determine_direction()
         self.move_spots()
         self.check_spot()   
