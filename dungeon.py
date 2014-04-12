@@ -45,7 +45,7 @@ class Game:
 
     def check_spot(self):
         if self.player.current_spot() in dungeon:
-            event_happens = dungeon[spot] - 1000
+            event_happens = dungeon[self.player.current_spot()] - 1000
             print event_text[event_happens]
     
     def determine_direction(self):
@@ -75,7 +75,7 @@ class Game:
 
     def take_turn(self):
         self.determine_direction()
-        self.move_spots()
+        self.player.move_player(self.move_spots())
         self.check_spot()   
   
 def roll_dice():
