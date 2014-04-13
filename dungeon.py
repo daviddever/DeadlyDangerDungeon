@@ -11,6 +11,9 @@ class Player:
         self.potion2 = 0
         self.pole = 0
 
+    def move_to_spot(self, spot):
+        self.spot = spot
+
     def move_player(self, spots):
         self.spot += spots
 
@@ -82,9 +85,36 @@ def roll_dice():
     d6 = random.randint(1, 6)
     return d6
 
-dungeon = {1:1001, 6:1002, 8:1003, 10:1004, 11:1005, 13:1006, 16:1006, 19:1005, 21:1004, 23:1003, 24:1003, 29:1005, 30:1005, 35:1005, 40:1007, 43:1003, 44:1008, 45:1003, 48:1013, 52:1005, 54:1015, 55:1015, 56:1005, 58:1008, 63:1009, 66:1016, 69:1005, 71:1005, 73:1005, 75:1010, 79:1010, 83:1011, 84:1011, 85:1011, 86:1011, 88:1011, 102:1014, 104:1012}
+class Event:
 
-event_text = ['Nothing', '1Found the Talisman', '2Used Key', '3Fell into spikes and died', '4Choked on poisonous gas (-1 HP)', '5Fell down deeper into the dungeon (-1 HP)', '6Fell into fire and burned to death', '7Fell into crocodile pit and died', '8Found potion (+2 HP)', '9Found the Key', '10Fell from the ladder and died', '11Escaped!', '12Touched the border and lowered the pole','13Hit by falling boulder (-1 HP)', '14Cave in (-1 HP)', '15Shot by arrows (-1 HP)', '16Used Talisman']
+    def __init__(self, player, message, func = None):
+        self.message = message
+        self.player = player
+        self.func = func
+
+    def do(self):
+        self.func(self.player)
+
+events = {
+    1: Event(player, 'Found the Talisman', lambda p: p.add_item('talisman'))
+    2: Event(player, 'Used Key')
+    3: Event(player, 'Fell into spikes and died', lambda p: p.take_damage(-p.current_hp()))
+    4: Event(player, 'Choked on poisonous gas (-1 HP)', lambda p: p.take_damage(-1))
+    5: Event(player, 'Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(1))
+    6: Event(player, 'Fell into fire and burned to death', lambda p: p.take_damage(-p.current_hp()))
+    7: Event(player, 'Fell into crocodile pint and died', lambda p: p.take_damage(-p.current_hp()))
+    8: Event(player, 'Found potion (+2 HP)', lambda p: p.add_item('potion1'))
+    9: Event(player, 'Found the key', lambda p: p.add_item('key'))
+    10: Event(player, 'Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp()))
+    11: Event(player, 'Escaped the Deadly Danger Dungeon!')
+    12: Evemt(player, 'Touched the border and lowered the pole', lambda p: p.lower_pole())
+    13: Event(player, 'Hit by falling boulder (-1 HP)', lambda p: p.take_damage(-1))
+    14: Event(player, 'Cave in (-1 HP)', lambda p: p.take_damage(-1))
+    15: Event(player, 'Shot by arrows (-1 HP)', lambda p: p.take_damage(-1))
+    16: Event(player, 'Used Talisman')
+}
+
+dungeon = {1:1001, 6:1002, 8:1003, 10:1004, 11:1005, 13:1006, 16:1006, 19:1005, 21:1004, 23:1003, 24:1003, 29:1005, 30:1005, 35:1005, 40:1007, 43:1003, 44:1008, 45:1003, 48:1013, 52:1005, 54:1015, 55:1015, 56:1005, 58:1008, 63:1009, 66:1016, 69:1005, 71:1005, 73:1005, 75:1010, 79:1010, 83:1011, 84:1011, 85:1011, 86:1011, 88:1011, 102:1014, 104:1012}
 
 wins = 0
 deaths = 0
