@@ -67,6 +67,8 @@ class Game:
         if self.direction == 0:
             # Moving backwards
             roll = roll * -1
+            if self.player.current_spot() + roll < 1:
+                roll = self.player.current_spot() - 1 
         return roll    
 
     def check_win(self):
@@ -79,7 +81,7 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        self.determine_direction()
+        self.determine_direction()               
         self.player.move_player(self.move_spots())
         self.check_spot()   
   
