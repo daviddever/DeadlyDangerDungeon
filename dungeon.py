@@ -54,7 +54,8 @@ class Game:
     
     def determine_direction(self):
         # Determine which direction to go based on game conditions
-        if self.player.has_item('key') == True and self.player.current_spot() > 1 or self.player.current_spot() > 89 and self.player.pole_down() == True:
+        if (self.player.has_item('key') and self.player.current_spot() > 1) or (self.player.current_spot() > 89 and self.player.pole_down()):
+         
             # Special case, going backwards
             self.direction = 0
        
@@ -68,13 +69,14 @@ class Game:
             # Moving backwards
             roll = roll * -1
             if self.player.current_spot() + roll < 1:
-                roll = self.player.current_spot() - 1 
+                roll = self.player.current_spot() - 1             
         return roll    
 
     def check_win(self):
         if self.player.current_spot() in range(83, 89):
+            print 'Player escaped!'
             return True
-
+        
     def check_alive(self):
         if self.player.current_hp() > 0:
             return True
@@ -171,6 +173,7 @@ wins = 0
 deaths = 0
 games = 0
 finished_games = 0
+turn = 0
 
 try:
     games = sys.argv[1]
