@@ -180,7 +180,7 @@ try:
 except:
     games = 1
 
-while finished_games < games: 
+while finished_games < int(games): 
     # Begin the game
     game = Game()
     while not game.check_win() and game.check_alive():
