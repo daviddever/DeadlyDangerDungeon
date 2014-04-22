@@ -52,24 +52,24 @@ class Game:
             events[dungeon[self.player.current_spot()]].do(self.player)
             
     
-    def determine_direction(self):
+    #def determine_direction(self):
         # Determine which direction to go based on game conditions
-        if (self.player.has_item('key') and self.player.current_spot() > 1) or (self.player.current_spot() > 89 and self.player.pole_down()):
+        #if (self.player.has_item('key') and self.player.current_spot() > 1) or (self.player.current_spot() > 89 and self.player.pole_down()):
          
             # Special case, going backwards
-            self.direction = 0
+            #self.direction = 0
        
-        else:
+        #else:
             # Normal progression
-            self.direction = 1
+            #self.direction = 1
    
     def move_spots(self):
         roll = roll_dice()
-        if self.direction == 0:
+        #if self.direction == 0:
             # Moving backwards
-            roll = roll * -1
-            if self.player.current_spot() + roll < 1:
-                roll = self.player.current_spot() - 1             
+            #roll = roll * -1
+            #if self.player.current_spot() + roll < 1:
+                #roll = self.player.current_spot() - 1             
         return roll    
 
     def check_win(self):
@@ -83,7 +83,7 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        self.determine_direction()               
+        #self.determine_direction()               
         self.player.move_player(self.move_spots())
         self.check_spot()   
   
@@ -103,70 +103,98 @@ class Event:
             print self.message
 
 events = {
-    1: Event('Found the Talisman', lambda p: p.add_item('talisman')),
-    2: Event('Used Key'),
-    3: Event('Fell into spikes and died', lambda p: p.take_damage(-p.current_hp())),
-    4: Event('Choked on poisonous gas (-1 HP)', lambda p: p.take_damage(-1)),
-    5: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(28)),
-    6: Event('Fell into fire and burned to death', lambda p: p.take_damage(-p.current_hp())),
-    7: Event('Fell into crocodile pint and died', lambda p: p.take_damage(-p.current_hp())),
-    8: Event('Found potion (+2 HP)', lambda p: p.add_item('potion1')),
-    9: Event('Found the key', lambda p: p.add_item('key')),
-    10: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())),
-    11: Event('Escaped the Deadly Danger Dungeon!'),
-    12: Event('Touched the border and lowered the pole', lambda p: p.lower_pole()),
-    13: Event('Hit by falling boulder (-1 HP)', lambda p: p.take_damage(-1)),
-    14: Event('Cave in (-1 HP)', lambda p: p.take_damage(-1)),
-    15: Event('Shot by arrows (-1 HP)', lambda p: p.take_damage(-1)),
-    16: Event('Used Talisman'),
-    17: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(25)),
-    18: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(49)),
-    19: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(33)),
-    20: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(38)),
-    21: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(100)),
-    22: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(97)),
-    23: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(65))     
+    1: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(25)),
+    2: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(8)),
+    3: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(13)),
+    4: Event('Fell into crocodile pint and died', lambda p: p.take_damage(-p.current_hp())),
+    5: Event('Fell into spikes and died', lambda p: p.take_damage(-p.current_hp())),
+    6: Event('Found potion (+2 HP)', lambda p: p.add_item('potion1')),
+    7: Event('Hit by falling boulder (-1 HP)', lambda p: p.take_damage(-1)),
+    8: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(177)),
+    9: Event('Shot by arrows (-1 HP)', lambda p: p.take_damage(-1)),
+    10: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(174)),
+    11: Event('Found potion (+2 HP)', lambda p: p.add_item('potion2')),
+    12: Event('Found the key', lambda p: p.add_item('key')),
+    13: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(64)),
+    14: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(69)),
+    15: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(53)),
+    16: Event('Choked on poisonous gas (-1 HP)', lambda p: p.take_damage(-1)),
+    17: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(78)),
+    18: Event('Fell into fire and burned to death', lambda p: p.take_damage(-p.current_hp())),
+    19: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(74)),
+    20: Event('Used Key'),
+    21: Event('Found the Talisman', lambda p: p.add_item('talisman')),
+    22: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(128)),
+    23: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(124)),  
+    24: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(124)),
+    25: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(133)),
+    26: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(137)),
+    27: Event('Used Talisman') # This and used key need to be fixed, will only occur if player lands on spot
+    28: Event('Fell from the ladder (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(145)),
+    29: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())),
+    30: Event('Escaped the Deadly Danger Dungeon!'),
+    31: Event('Cave in (-1 HP)', lambda p: p.take_damage(-1)),
+    32: Event('Touched the border and lowered the pole', lambda p: p.lower_pole())
 }
 
 dungeon = {
-    1:1, 
-    6:2, 
-    8:3, 
-    10:4, 
-    11:5, 
-    13:6, 
-    16:6, 
-    19:17, 
-    21:4, 
-    23:3, 
-    24:3, 
-    29:18, 
-    30:19, 
-    35:20, 
-    40:7, 
-    43:3, 
-    44:8, 
-    45:3, 
-    48:3,
-    52:21, 
-    54:15,
-    55:15, 
-    56:22, 
-    58:8, 
-    63:9, 
-    66:16, 
-    69:23, 
-    71:23, 
-    73:23, 
-    75:10, 
-    79:10, 
-    83:11, 
-    84:11, 
-    85:11, 
-    86:11, 
-    88:11, 
-    102:14, 
-    104:12
+    4: 1, 
+    5: 2, 
+    10: 3, 
+    15: 4, 
+    18: 5, 
+    19: 6,
+    20: 5, 
+    23: 7,
+    28: 8,
+    30: 9,
+    31: 9,
+    32: 10,
+    34: 11,
+    39: 12,
+    44: 11,
+    46: 10,
+    50: 8,
+    54: 7,
+    57: 5,
+    58: 6,
+    59: 5,
+    62: 4,
+    67: 13,
+    72: 14,
+    73: 15, # Come back to this
+    79: 5,
+    80: 5,
+    82: 16,
+    84: 17,
+    86: 18,
+    89: 18,
+    91: 19,
+    92: 16,
+    94: 3,
+    96: 20,
+    101: 21,
+    108: 3,
+    110: 16,
+    111: 22,
+    113: 18,
+    113: 18,
+    118: 23,
+    120: 16,
+    122: 5,
+    123: 5,
+    129: 24, # Come back to this
+    130: 25,
+    135: 26,
+    140: 4,
+    143: 5,
+    150: 27,
+    153: 28,
+    155: 28,
+    157: 28,
+    160: 29,
+    161: 29,
+    165: 30,
 }
 
 wins = 0
