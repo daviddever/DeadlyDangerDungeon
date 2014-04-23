@@ -4,7 +4,7 @@ import sys
 class Player:
 
     def __init__(self):
-        self.spot = 27
+        self.spot = 1
         self.hp = 3
         self.key = 0
         self.talisman = 0
@@ -51,25 +51,8 @@ class Game:
         if self.player.current_spot() in dungeon:
             events[dungeon[self.player.current_spot()]].do(self.player)
             
-    
-    #def determine_direction(self):
-        # Determine which direction to go based on game conditions
-        #if (self.player.has_item('key') and self.player.current_spot() > 1) or (self.player.current_spot() > 89 and self.player.pole_down()):
-         
-            # Special case, going backwards
-            #self.direction = 0
-       
-        #else:
-            # Normal progression
-            #self.direction = 1
-   
     def move_spots(self):
         roll = roll_dice()
-        #if self.direction == 0:
-            # Moving backwards
-            #roll = roll * -1
-            #if self.player.current_spot() + roll < 1:
-                #roll = self.player.current_spot() - 1             
         return roll    
 
     def check_win(self):
@@ -83,7 +66,6 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        #self.determine_direction()               
         self.player.move_player(self.move_spots())
         self.check_spot()   
   
@@ -106,7 +88,7 @@ events = {
     1: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(25)),
     2: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(8)),
     3: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(13)),
-    4: Event('Fell into crocodile pint and died', lambda p: p.take_damage(-p.current_hp())),
+    4: Event('Fell into crocodile pit and died', lambda p: p.take_damage(-p.current_hp())),
     5: Event('Fell into spikes and died', lambda p: p.take_damage(-p.current_hp())),
     6: Event('Found potion (+2 HP)', lambda p: p.add_item('potion1')),
     7: Event('Hit by falling boulder (-1 HP)', lambda p: p.take_damage(-1)),
@@ -195,7 +177,12 @@ dungeon = {
     160: 29,
     161: 29,
     165: 30,
-}
+    179: 31,
+    181: 32,
+    183: 31
+} 
+
+
 
 wins = 0
 deaths = 0
