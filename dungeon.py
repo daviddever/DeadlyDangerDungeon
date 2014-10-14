@@ -66,8 +66,27 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        self.player.move_player(self.move_spots())
-        self.check_spot()   
+        # Check to determine if the player is in the lowest part of the map, and if they are require them to land
+        # on the pole to lower ladder before climbining out.
+        # Then check if the the player has the key to determine direction
+        if self.player.pole_down() != True:
+            if self.player.current_spot() + self.move_spots() not in range(181, 195):
+                self.player.move_player(self.move_spots())
+                self.check_spot()
+        else:
+            if self.player.current_spot() + self.move_spots() < 195:
+                self.player.move_player(self.move_spots())
+                self.check_spot()
+
+            else:
+                if self.player.has_item('key') == True:
+                    overage = int((self.player.current_spot() + self.move_spots)) - 195
+                    self.player.move_to_spot((overage + 43))
+                else:
+                    overage = int((self.player.current_spot() + self.move_spots)) - 195
+                    self.player.move_to_spot((overage + 35))
+
+
   
 def roll_dice():
     d6 = random.randint(1, 6)
@@ -114,7 +133,7 @@ events = {
     27: Event('Used Talisman'), # This and used key need to be fixed, will only occur if player lands on spot
     28: Event('Fell from the ladder (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(145)),
     29: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())),
-    # 30: Event('Escaped the Deadly Danger Dungeon!'),
+    # 30: Event('Escaped the Deadly Danger Dungeon!'), event no longer required due to game.check_win()
     31: Event('Cave in (-1 HP)', lambda p: p.take_damage(-1)),
     32: Event('Touched the border and lowered the pole', lambda p: p.lower_pole())
 }
@@ -176,7 +195,7 @@ dungeon = {
     157: 28,
     160: 29,
     161: 29,
-    # 165: 30,
+    # 165: 30, event no longer required due to game.check_win()
     179: 31,
     181: 32,
     183: 31

@@ -27,6 +27,8 @@ Running the script will play the game once with one player, the script takes the
 
 Running the script followed by a number will run the game that many number of times and tally the total.
 
-### Bugs
+### Bugs/Todo
 
-There are two spaces in the game where the player can land as a result of falling deeper into the dungeon. These spaces should be skipped unless the the player has speciffically fallen onto it, but currently are not.
+Currently can hang if the player falls from the escape ladder.
+
+Player falling deeper into the dungeon needs to determine based on inventory which way to continue (ie, which number square they land on)
