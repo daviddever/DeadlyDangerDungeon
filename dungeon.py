@@ -76,14 +76,14 @@ class Game:
         else:
             if self.player.current_spot() + self.move_spots() < 195:
                 self.player.move_player(self.move_spots())
-                self.check_spot()
+                self.check_spot()                
 
             else:
                 if self.player.has_item('key'):
-                    overage = int(self.player.current_spot() + self.move_spots) - 195
+                    overage = int(self.player.current_spot() + self.move_spots()) - 195
                     self.player.move_to_spot(overage + 43)
                 else:
-                    overage = int(self.player.current_spot() + self.move_spots) - 195
+                    overage = int(self.player.current_spot() + self.move_spots()) - 195
                     self.player.move_to_spot(overage + 35)
 
 
@@ -212,6 +212,7 @@ try:
 except:
     games = 1
 
+ 
 while finished_games < int(games): 
     # Begin the game
     game = Game()
