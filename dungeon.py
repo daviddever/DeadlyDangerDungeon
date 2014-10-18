@@ -1,6 +1,7 @@
 import random
 import sys
 
+
 class Player:
 
     def __init__(self):
@@ -17,6 +18,7 @@ class Player:
 
     def move_player(self, spots):
         self.spot += spots
+        print self.spot
 
     def take_damage(self, dmg):
         self.hp += dmg
@@ -43,7 +45,8 @@ class Player:
 
 class Game:
 
-    def __init__(self):    
+    def __init__(self):
+        print    
         print 'A new Doomed Soul enters the Deadly Danger Dungeon'
         self.player = Player()
 
@@ -56,7 +59,7 @@ class Game:
         return roll    
 
     def check_win(self):
-        if self.player.current_spot() in range(165, 170):
+        if self.player.current_spot() in range(161, 170):
             print 'Player escaped!'
             return True
         
@@ -104,7 +107,7 @@ class Event:
             print self.message
 
 events = {
-    1: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(25)),
+    1: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(25)),       
     2: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(8)),
     3: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(13)),
     4: Event('Fell into crocodile pit and died', lambda p: p.take_damage(-p.current_hp())),
@@ -127,12 +130,12 @@ events = {
     21: Event('Found the Talisman', lambda p: p.add_item('talisman')),
     22: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(128)),
     23: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(124)),  
-    24: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(124)),
+    24: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(53)),
     25: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(133)),
     26: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(137)),
     27: Event('Used Talisman'), # This and used key need to be fixed, will only occur if player lands on spot
-    28: Event('Fell from the ladder (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(145)),
-    29: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())),
+    28: Event('Fell from the ladder (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(146)),
+    29: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())), 
     31: Event('Cave in (-1 HP)', lambda p: p.take_damage(-1)),
     32: Event('Touched the border and lowered the pole', lambda p: p.lower_pole())
 }
@@ -188,12 +191,12 @@ dungeon = {
     135: 26,
     140: 4,
     143: 5,
-    150: 27,
+    146: 27,
+    149: 28,
+    151: 28,
     153: 28,
-    155: 28,
-    157: 28,
-    160: 29,
-    161: 29,
+    155: 29,
+    157: 29,
     179: 31,
     181: 32,
     183: 31
@@ -212,7 +215,7 @@ try:
 except:
     games = 1
 
- 
+
 while finished_games < int(games): 
     # Begin the game
     game = Game()
