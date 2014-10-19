@@ -69,27 +69,81 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        # Check to determine if the player is in the lowest part of the map, and if they are require them to land
-        # on the pole to lower ladder before climbining out.
-        # Then check if the the player has the key to determine direction
-        if self.player.pole_down() != True:
-            if self.player.current_spot() + self.move_spots() not in range(181, 195):
+        if not check_for_special():
+            self.player.move_player(self.move_spots())
+            self.check_spot()
+        else:
+
+            if pass_key():
+                if self.player.current_spot() + self.move_spots() == 39:
+                    self.player.move_player(self.move_spots())
+                    self.check_spot()
+
+            if pass_talisman():
+                if self.player.current_spot() + self.move_spots() == 191:
+                    self.player.move_player(self.move_spots())
+                    self.check_spot()
+    
+            if pass_door():
+                print "Used key."
                 self.player.move_player(self.move_spots())
                 self.check_spot()
-        else:
-            if self.player.current_spot() + self.move_spots() < 195:
+
+            if bottom_level():
+                #fix later
+
+            if pass_use_talisman():
+                print "Used talisman."
                 self.player.move_player(self.move_spots())
-                self.check_spot()                
+                self.check_spot()
 
-            else:
-                if self.player.has_item('key'):
-                    overage = int(self.player.current_spot() + self.move_spots()) - 195
-                    self.player.move_to_spot(overage + 43)
-                else:
-                    overage = int(self.player.current_spot() + self.move_spots()) - 195
-                    self.player.move_to_spot(overage + 35)
+    def check_for_special(self):
+        if pass_key():
+            return True
 
+        if pass_talisman():
+            return True
 
+        if pass_door():
+            return True
+
+        if bottom_level:
+            return True
+
+        if pass_use_talisman:
+            return True
+            
+    def pass_key(self):
+        if self.player.current_spot() + self.move_spots() in range(39. 44):
+            return True
+            
+    def pass_talisman(self:)
+        if self.player.current_spot() + self.move_spots() in range(191, 197):
+            return True
+
+    def pass_pole(self):
+        if self.player.current_spot() + self.move_spots() in range(181, 186):
+            return True
+
+    def pass_door(self):
+        if self.player.current_spot() + self.move_spots() in range(82, 86):
+            return True
+
+    def bottom_level(self):
+        if self.player.current_spot() in range(172, 195):
+            return True
+
+    def pass_pole(self):
+        if self.player.current_spot() + self.move_spots() in range(181. 187):
+            return True
+
+    def pass_ladder(self):
+        if self.player.current_spot() + self.move_spots() in range(195. 201):
+            return True
+            
+    def pass_use_talisman(self):
+        if self.player.current_spot() + self.move_spots() in range(146. 152):
+            return True  
   
 def roll_dice():
     d6 = random.randint(1, 6)
@@ -126,14 +180,14 @@ events = {
     17: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(78)),
     18: Event('Fell into fire and burned to death', lambda p: p.take_damage(-p.current_hp())),
     19: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(74)),
-    20: Event('Used Key'),
+    # 20: Event('Used Key'), now resolved with game.pass_door()
     21: Event('Found the Talisman', lambda p: p.add_item('talisman')),
     22: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(128)),
     23: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(124)),  
     24: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(53)),
     25: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(133)),
     26: Event('Fell down deeper into the dungeon (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(137)),
-    27: Event('Used Talisman'), # This and used key need to be fixed, will only occur if player lands on spot
+    # 27: Event('Used Talisman'), now resolved with game.pass_use_talisman()
     28: Event('Fell from the ladder (-1 HP)', lambda p: p.take_damage(-1) and p.move_to_spot(146)),
     29: Event('Fell from the ladder and died', lambda p: p.take_damage(-p.current_hp())), 
     31: Event('Cave in (-1 HP)', lambda p: p.take_damage(-1)),
@@ -175,7 +229,7 @@ dungeon = {
     91: 19,
     92: 16,
     94: 3,
-    96: 20,
+    #96: 20,
     101: 21,
     108: 3,
     110: 16,
@@ -191,7 +245,7 @@ dungeon = {
     135: 26,
     140: 4,
     143: 5,
-    146: 27,
+    #146: 27,
     149: 28,
     151: 28,
     153: 28,
