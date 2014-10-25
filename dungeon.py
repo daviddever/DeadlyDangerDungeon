@@ -1,7 +1,6 @@
 import random
 import sys
 
-
 class Player:
 
     def __init__(self):
@@ -18,7 +17,6 @@ class Player:
 
     def move_player(self, spots):
         self.spot += spots
-        print self.spot
 
     def take_damage(self, dmg):
         self.hp += dmg
@@ -51,6 +49,7 @@ class Game:
         self.player = Player()
 
     def check_spot(self):
+        print self.player.current_spot()
         if self.player.current_spot() in dungeon:
             events[dungeon[self.player.current_spot()]].do(self.player)
             
@@ -112,6 +111,9 @@ class Game:
                 print "Used talisman."
                 self.player.move_player(self.move_spots())
                 self.check_spot()
+
+            self.player.move_player(self.move_spots())
+            self.check_spot()
 
     def check_for_special(self):
         return self.pass_key() or self.pass_talisman or self.pass_door() or self.bottom_level()
@@ -268,6 +270,8 @@ while finished_games < int(games):
         wins +=1
     else:
         deaths +=1
+    
+
 
 print str(games) + ' games played'
 print str(deaths) + ' deaths'
