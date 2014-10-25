@@ -117,32 +117,25 @@ class Game:
         return self.pass_key() or self.pass_talisman or self.pass_door() or self.bottom_level()
             
     def pass_key(self):
-        if self.player.current_spot() + self.move_spots() in range(39, 44):
-            return True
+        return self.player.current_spot() + self.move_spots() in range(39, 44)
             
     def pass_talisman(self):
-        if self.player.current_spot() + self.move_spots() in range(191, 197):
-            return True
+        return self.player.current_spot() + self.move_spots() in range(191, 197)
 
     def pass_door(self):
-        if self.player.current_spot() + self.move_spots() in range(82, 86):
-            return True
+        return self.player.current_spot() + self.move_spots() in range(82, 86)
 
     def bottom_level(self):
-        if self.player.current_spot() in range(172, 195):
-            return True
+        return self.player.current_spot() in range(172, 195)
 
     def pass_pole(self):
-        if self.player.current_spot() + self.move_spots() in range(181,187):
-            return True
+        return self.player.current_spot() + self.move_spots() in range(181,187)
 
     def pass_ladder(self):
-        if self.player.current_spot() + self.move_spots() in range(195, 201):
-            return True
+        return self.player.current_spot() + self.move_spots() in range(195, 201)
             
     def pass_use_talisman(self):
-        if self.player.current_spot() + self.move_spots() in range(146, 152):
-            return True  
+        return self.player.current_spot() + self.move_spots() in range(146, 152)
   
 def roll_dice():
     d6 = random.randint(1, 6)
@@ -271,7 +264,7 @@ while finished_games < int(games):
     while not game.check_win() and game.check_alive():
         game.take_turn()
     finished_games +=1
-    if game.check_win() is True:
+    if game.check_win():
         wins +=1
     else:
         deaths +=1
