@@ -69,33 +69,33 @@ class Game:
         print 'Player is dead'
 
     def take_turn(self):
-        if not check_for_special():
+        if not self.check_for_special():
             self.player.move_player(self.move_spots())
             self.check_spot()
         else:
 
-            if pass_key():
+            if self.pass_key():
                 if self.player.current_spot() + self.move_spots() == 39:
                     self.player.move_player(self.move_spots())
                     self.check_spot()
 
-            if pass_talisman():
+            if self.pass_talisman():
                 if self.player.current_spot() + self.move_spots() == 191:
                     self.player.move_player(self.move_spots())
                     self.check_spot()
     
-            if pass_door():
+            if self.pass_door():
                 print "Used key."
                 self.player.move_player(self.move_spots())
                 self.check_spot()
 
-            if bottom_level():
+            if self.bottom_level():
                 if not self.player.pole_down:
                     if self.player.current_spot() + self.move_spots() < 195:
                         self.player.move_player(self.move_spots())
                         self.check_spot()
 
-                if pass_ladder:
+                if self.pass_ladder:
                     if self.player.has_item('key') == True:
                         overage = int((self.player.current_spot() + self.move_spots)) - 195
                         self.player.move_to_spot((overage + 43))
@@ -108,32 +108,19 @@ class Game:
                     self.check_spot()                  
 
 
-            if pass_use_talisman():
+            if self.pass_use_talisman():
                 print "Used talisman."
                 self.player.move_player(self.move_spots())
                 self.check_spot()
 
     def check_for_special(self):
-        if pass_key():
-            return True
-
-        if pass_talisman():
-            return True
-
-        if pass_door():
-            return True
-
-        if bottom_level:
-            return True
-
-        if pass_use_talisman:
-            return True
+        return self.pass_key() or self.pass_talisman or self.pass_door() or self.bottom_level()
             
     def pass_key(self):
-        if self.player.current_spot() + self.move_spots() in range(39. 44):
+        if self.player.current_spot() + self.move_spots() in range(39, 44):
             return True
             
-    def pass_talisman(self:)
+    def pass_talisman(self):
         if self.player.current_spot() + self.move_spots() in range(191, 197):
             return True
 
@@ -146,15 +133,15 @@ class Game:
             return True
 
     def pass_pole(self):
-        if self.player.current_spot() + self.move_spots() in range(181. 187):
+        if self.player.current_spot() + self.move_spots() in range(181,187):
             return True
 
     def pass_ladder(self):
-        if self.player.current_spot() + self.move_spots() in range(195. 201):
+        if self.player.current_spot() + self.move_spots() in range(195, 201):
             return True
             
     def pass_use_talisman(self):
-        if self.player.current_spot() + self.move_spots() in range(146. 152):
+        if self.player.current_spot() + self.move_spots() in range(146, 152):
             return True  
   
 def roll_dice():
