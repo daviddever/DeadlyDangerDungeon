@@ -29,6 +29,4 @@ Running the script followed by a number will run the game that many number of ti
 
 ### Bugs/Todo
 
-Currently can hang if the player falls from the escape ladder.
-
-Player falling deeper into the dungeon needs to determine based on inventory which way to continue (ie, which number square they land on)
+Special case diretional issues.
