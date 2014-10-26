@@ -27,6 +27,6 @@ Running the script will play the game once with one player, the script takes the
 
 Running the script followed by a number will run the game that many number of times and tally the total.
 
-### Bugs/Todo
+### Conclusion
 
-Special case diretional issues.
+Ran the script through 1000000 games resulting in 999732 deaths and 268 wins (0.0268%). 
